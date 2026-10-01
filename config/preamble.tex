@@ -1,0 +1,186 @@
+% ==============================================================================
+% PREÁMBULO GENERAL Y PAQUETES DEL PROYECTO
+% Ubicación: config/preamble.tex
+% ==============================================================================
+% Este archivo centraliza la tipografía, colores institucionales y macros base
+% para que cualquier ajuste visual (h1, h2, h3) se modifique en un solo lugar.
+% ==============================================================================
+
+% ------------------------------------------------------------------------------
+% 1. PAQUETES BÁSICOS Y FORMATO DE PÁGINA
+% ------------------------------------------------------------------------------
+\usepackage[utf8]{inputenc}            % Soporte para caracteres UTF-8
+\usepackage[T1]{fontenc}               % Codificación de fuentes T1
+\usepackage[spanish, es-tabla]{babel}  % Idioma español (fechas, tablas, etc.)
+\usepackage[margin=2.5cm]{geometry}    % Márgenes de página equilibrados (2.5 cm)
+\usepackage{parskip}                   % Espaciado moderno entre párrafos sin sangría
+
+% ------------------------------------------------------------------------------
+% 2. TIPOGRAFÍA LIMPIA Y MODERNA (Latin Modern Sans-Serif)
+% ------------------------------------------------------------------------------
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
+
+% ------------------------------------------------------------------------------
+% 3. MATEMÁTICAS, SÍMBOLOS Y LISTAS
+% ------------------------------------------------------------------------------
+\usepackage{amsmath, amssymb, amsfonts}% Fórmulas matemáticas y símbolos
+\setlength{\jot}{6pt}                  % Espaciado vertical entre líneas en align y gather
+\usepackage{enumerate}                 % Listas personalizables (a), (b), etc.
+
+% ------------------------------------------------------------------------------
+% 4. COLORES INSTITUCIONALES (UCV / CIENCIAS)
+% ------------------------------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{primary}{RGB}{18, 48, 86}        % Azul marino institucional UCV
+\definecolor{secondary}{RGB}{24, 110, 72}     % Verde institucional
+\definecolor{darkgray}{RGB}{45, 50, 60}       % Gris oscuro para texto general
+\definecolor{lightbg}{RGB}{246, 248, 250}     % Fondo tenue para tablas o cajas
+\definecolor{bordercolor}{RGB}{215, 222, 230} % Borde y líneas divisorias sutiles
+
+% ------------------------------------------------------------------------------
+% 5. GRÁFICOS Y DIAGRAMAS
+% ------------------------------------------------------------------------------
+\usepackage{graphicx}                  % Inclusión de imágenes externas
+\usepackage{tikz}                      % Diagramas vectoriales para circuitos y grafos
+
+% ------------------------------------------------------------------------------
+% 6. ENLACES Y REFERENCIAS
+% ------------------------------------------------------------------------------
+\usepackage{hyperref}                  % Enlaces en el documento
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primary,
+    urlcolor=secondary,
+    citecolor=primary
+}
+
+% ------------------------------------------------------------------------------
+% 7. JERARQUÍA DE TÍTULOS EN NOTACIÓN WEB: \h1, \h2, \h3, \h4
+% ------------------------------------------------------------------------------
+% Permite estructurar documentos usando directamente la notación web:
+%   \h1{Práctica 0: Conteo y probabilidad}  -> Título principal de práctica
+%   \h2{Ejercicio 1}                       -> Título de ejercicio
+%   \h3{Desarrollo y respuesta}             -> Subtítulo de ítem o sección
+%   \h4{Caso particular}                   -> Sub-ítem menor
+%
+% Centraliza tamaños, colores y espaciados para modificarlos en un solo lugar.
+% ------------------------------------------------------------------------------
+
+% --- Configuración h1 (Título principal / Práctica) ---
+\newcommand{\hOneSize}{\LARGE}
+\newcommand{\hOneColor}{primary}
+\newcommand{\hOneLineGap}{3.5mm}            % Separación equilibrada entre el texto y la línea divisoria
+\newcommand{\hOneLineWidth}{0.65\textwidth} % Ancho de la línea divisoria
+\newcommand{\hOneLineHeight}{0.8pt}         % Grosor de la línea divisoria
+
+\newcommand{\hOne}[1]{%
+  \par\vspace{2.5mm}%
+  \noindent%
+  \begin{minipage}{\linewidth}
+    \centering
+    \setlength{\parskip}{0pt}%
+    {\hOneSize\bfseries\color{\hOneColor} #1}\par
+    \nointerlineskip\vspace{\hOneLineGap}%
+    {\color{bordercolor}\rule{\hOneLineWidth}{\hOneLineHeight}}\par
+  \end{minipage}\par
+  \addcontentsline{toc}{section}{#1}%
+  \vspace{2.5mm}%
+}
+
+% --- Configuración h2 (Título de ejercicio) ---
+\newcommand{\hTwoSize}{\Large}
+\newcommand{\hTwoColor}{secondary}
+
+\newcommand{\hTwo}[1]{%
+  \par\vspace{3.5mm}%
+  \noindent{\hTwoSize\bfseries\color{\hTwoColor} #1\par}%
+  \vspace{1.5mm}%
+}
+
+% --- Configuración h3 (Subtítulo de ítem, pregunta o desarrollo) ---
+\newcommand{\hThreeSize}{\normalsize}
+\newcommand{\hThreeColor}{primary}
+
+\newcommand{\hThree}[1]{%
+  \par\vspace{4.5mm}%
+  \noindent{\hThreeSize\bfseries\color{\hThreeColor} #1\par}%
+  \vspace{1.5mm}%
+}
+
+% --- Configuración h4 (Sub-ítem menor o nota puntual) ---
+\newcommand{\hFourSize}{\small}
+\newcommand{\hFourColor}{darkgray}
+
+\newcommand{\hFour}[1]{%
+  \par\vspace{3.5mm}%
+  \noindent{\hFourSize\bfseries\color{\hFourColor} #1\par}%
+  \vspace{1.5mm}%
+}
+
+% --- Despachador universal de notación web: \h1, \h2, \h3, \h4 ---
+% En LaTeX, escribir \h1{...} pasa el argumento 1 como #1 y el texto como #2.
+\newcommand{\h}[2]{%
+  \ifcase#1\relax
+    #2%
+  \or
+    \hOne{#2}%   % \h1{...}
+  \or
+    \hTwo{#2}%   % \h2{...}
+  \or
+    \hThree{#2}% % \h3{...}
+  \or
+    \hFour{#2}%  % \h4{...}
+  \else
+    \hThree{#2}%
+  \fi
+}
+
+% --- Alias de compatibilidad y nombres alternativos ---
+\let\hone\hOne
+\let\htwo\hTwo
+\let\hthree\hThree
+\let\hfour\hFour
+\let\hUno\hOne
+\let\hDos\hTwo
+\let\hTres\hThree
+\let\tituloPractica\hOne
+\let\tituloEjercicio\hTwo
+\let\miniTitulo\hThree
+\let\subtituloItem\hThree
+
+% --- Conclusión pedagógica ---
+% Uso: \conclusion{Explicación sencilla del resultado obtenido...}
+\newcommand{\conclusionSize}{\normalsize}
+\newcommand{\conclusionColor}{secondary}
+\newcommand{\conclusion}[1]{%
+  \par\vspace{5mm}%
+  \noindent{\conclusionSize\bfseries\color{\conclusionColor} Conclusión\par}%
+  \vspace{1.5mm}%
+  #1\par%
+}
+
+% ------------------------------------------------------------------------------
+% 8. CAJAS Y ENTORNOS DESTACADOS (NOTAS Y DEMOSTRACIONES)
+% ------------------------------------------------------------------------------
+% Entorno para notas teóricas destacadas con marco y fondo claro
+% Uso: \begin{cajaNota} ... \end{cajaNota}
+\newsavebox{\cajaNotaBox}
+\newenvironment{cajaNota}{%
+  \par\vspace{3.5mm}%
+  \noindent%
+  \begin{lrbox}{\cajaNotaBox}%
+    \begin{minipage}{\dimexpr\linewidth-20pt-1.6pt\relax}%
+      \small
+}{%
+    \end{minipage}%
+  \end{lrbox}%
+  \begingroup
+  \setlength{\fboxrule}{0.8pt}%
+  \setlength{\fboxsep}{10pt}%
+  \fcolorbox{bordercolor}{lightbg}{\usebox{\cajaNotaBox}}%
+  \endgroup
+  \par\vspace{3.5mm}%
+}
+\let\cajaDemostracion\cajaNota
+\let\endcajaDemostracion\endcajaNota

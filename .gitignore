@@ -1,0 +1,54 @@
+# ==============================================================================
+# CARPETA DE SALIDA DE COMPILACIÓN
+# ==============================================================================
+# Ignora todos los PDFs generados y archivos auxiliares de compilación
+build/
+.agents/
+.vscode/
+
+# ==============================================================================
+# ARCHIVOS AUXILIARES DE LATEX
+# (Por si se compila directamente sin pasar por build/)
+# ==============================================================================
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.log
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.vrb
+
+# ==============================================================================
+# ARCHIVOS TEMPORALES DE EDITORES Y SISTEMA OPERATIVO
+# ==============================================================================
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editores de texto y copias de seguridad
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Entornos virtuales y caché de Python (scripts auxiliares)
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+env/

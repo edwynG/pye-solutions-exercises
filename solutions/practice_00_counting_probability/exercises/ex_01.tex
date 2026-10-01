@@ -1,0 +1,36 @@
+% !TEX root = ../../../main.tex
+% ==============================================================================
+% EJERCICIO 1 - PRÁCTICA 0: CONTEO Y PROBABILIDAD
+% Ubicación: solutions/practice_00_counting_probability/exercises/ex_01.tex
+% ==============================================================================
+\IfFileExists{main.tex}{%
+    \documentclass[main.tex]{subfiles}%
+}{%
+    \documentclass[../../../main.tex]{subfiles}%
+}
+
+\begin{document}
+
+\h2{Ejercicio 1}
+
+Hay 20 candidatos para ocupar 3 cargos distintos. ¿De cuántas maneras diferentes se podrían ocupar los tres cargos?
+
+\h3{Desarrollo y respuesta}
+Para resolver este problema representamos los tres cargos como casillas que asignamos en orden sucesivo.
+
+Como los cargos tienen funciones distintas, el orden de asignación es determinante. No es lo mismo que un candidato sea elegido para el primer puesto a que resulte electo para el segundo. Además, una misma persona no puede ocupar dos cargos a la vez, por lo que el proceso se efectúa sin repetición.
+
+\begin{enumerate}
+    \item Para el primer cargo disponemos de cualquiera de los 20 candidatos.
+    \item Para el segundo cargo, al haber seleccionado ya a una persona, restan 19 postulantes disponibles.
+    \item Para el tercer cargo, cubiertos los puestos previos, quedan 18 opciones posibles.
+\end{enumerate}
+
+El número total de asignaciones se obtiene aplicando el principio fundamental de la multiplicación mediante variaciones sin repetición de 20 elementos tomados de 3 en 3,
+\begin{equation*}
+    N = 20 \times 19 \times 18 = \frac{20!}{(20 - 3)!} = 6840.
+\end{equation*}
+
+\conclusion{Existen $6840$ maneras diferentes de ocupar los tres cargos distintos a partir del grupo de 20 candidatos.}
+
+\end{document}

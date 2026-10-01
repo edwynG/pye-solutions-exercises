@@ -1,0 +1,119 @@
+% ==============================================================================
+% DOCUMENTO MAESTRO GLOBAL (MAIN)
+% Compila todo el curso: portada, índice y todas las prácticas unificadas
+% Ubicación: main.tex (en la raíz del proyecto)
+% ==============================================================================
+\documentclass[11pt, a4paper]{article}
+
+% Paquete subfiles para permitir compilación modular multinivel
+\usepackage{subfiles}
+
+% Configuraciones compartidas (paquetes y macros matemáticas)
+% Carga dinámica compatible tanto desde la raíz como desde subdirectorios
+\IfFileExists{config/preamble.tex}{%
+    \input{config/preamble.tex}%
+    \input{config/macros.tex}%
+}{%
+    \IfFileExists{../../config/preamble.tex}{%
+        \input{../../config/preamble.tex}%
+        \input{../../config/macros.tex}%
+    }{%
+        \input{../../../config/preamble.tex}%
+        \input{../../../config/macros.tex}%
+    }%
+}
+
+\begin{document}
+
+% ==============================================================================
+% PORTADA INSTITUCIONAL
+% ==============================================================================
+\begin{titlepage}
+    \centering
+    
+    % Encabezado institucional con logos destacados
+    \begin{minipage}{0.22\textwidth}
+        \flushleft
+        \IfFileExists{images/logos/ucv_logo.png}{%
+            \includegraphics[height=3.2cm, keepaspectratio]{images/logos/ucv_logo.png}%
+        }{%
+            \IfFileExists{images/logos/ucv_logo.jpg}{%
+                \includegraphics[height=3.2cm, keepaspectratio]{images/logos/ucv_logo.jpg}%
+            }{}%
+        }
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.54\textwidth}
+        \centering
+        {\bfseries\large\color{primary} Universidad Central de Venezuela\par}
+        \vspace{2mm}
+        {\normalsize Facultad de Ciencias\par}
+        \vspace{1mm}
+        {\normalsize Escuela de Computación\par}
+        \vspace{2mm}
+        {\normalsize\bfseries Probabilidad y Estadística\par}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.22\textwidth}
+        \flushright
+        \IfFileExists{images/logos/cs_logo.png}{%
+            \includegraphics[height=3.2cm, keepaspectratio]{images/logos/cs_logo.png}%
+        }{%
+            \IfFileExists{images/logos/cs_logo.jpg}{%
+                \includegraphics[height=3.2cm, keepaspectratio]{images/logos/cs_logo.jpg}%
+            }{}%
+        }
+    \end{minipage}
+
+    \vspace{3.5cm}
+
+    % Título del documento
+    {\LARGE \bfseries\color{primary} Probabilidad y Estadística\par}
+    \vspace{0.4cm}
+    {\large Guías de trabajos prácticos resueltas paso a paso\par}
+    \vspace{0.3cm}
+    {\normalsize\color{secondary}\bfseries Material de preparaduría\par}
+
+    \vspace{1.5cm}
+    {\color{bordercolor}\rule{0.5\textwidth}{0.8pt}}
+
+    \vfill
+
+    % Fecha y ciudad en una sola línea
+    {\normalsize Caracas, Venezuela --- 2026\par}
+\end{titlepage}
+
+% Índice general en su propia página exclusiva
+\tableofcontents
+\clearpage
+
+% ==============================================================================
+% PRÁCTICAS DEL CURSO (UBICADAS DENTRO DE solutions/)
+% Cada práctica inicia en su propia página para evitar cortes
+% ==============================================================================
+
+% Práctica 0: Conteo y probabilidad
+% \subfile{solutions/practice_00_counting_probability/practice_00.tex}
+
+% Práctica 8: Confiabilidad
+\clearpage
+\subfile{solutions/practice_08_reliability/practice_08.tex}
+
+% --- PRÁCTICAS PENDIENTES POR RESOLVER ---
+% Descomenta cada bloque conforme vayamos desarrollando sus ejercicios:
+%\clearpage
+%\subfile{solutions/practice_01_random_variables/practice_01.tex}
+%\clearpage
+%\subfile{solutions/practice_02_distributions/practice_02.tex}
+%\clearpage
+%\subfile{solutions/practice_03_joint_distributions/practice_03.tex}
+%\clearpage
+%\subfile{solutions/practice_04_normal_clt_lln/practice_04.tex}
+%\clearpage
+%\subfile{solutions/practice_05_confidence_intervals/practice_05.tex}
+%\clearpage
+%\subfile{solutions/practice_06_hypothesis_testing/practice_06.tex}
+%\clearpage
+%\subfile{solutions/practice_07_markov_chains/practice_07.tex}
+
+\end{document}

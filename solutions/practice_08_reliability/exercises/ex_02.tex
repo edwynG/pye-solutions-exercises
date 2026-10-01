@@ -1,0 +1,157 @@
+% !TEX root = ../../../main.tex
+% ==============================================================================
+% EJERCICIO 2 - PRÁCTICA 8: CONFIABILIDAD
+% Ubicación: solutions/practice_08_reliability/exercises/ex_02.tex
+% ==============================================================================
+\IfFileExists{main.tex}{%
+    \documentclass[main.tex]{subfiles}%
+}{%
+    \documentclass[../../../main.tex]{subfiles}%
+}
+
+\begin{document}
+
+\h2{Ejercicio 2}
+
+Tomando en cuenta los sistemas del Ejercicio 1, y asumiendo que cada componente tiene tasas de falla constantes $\lambda_1, \lambda_2$ y $\lambda_3$.
+\begin{enumerate}[(a)]
+    \item Calcule el tiempo esperado de falla de cada sistema.
+    \item Si la tasa de falla de las componentes $C_1$ y $C_2$ del Sistema A cambian después de 10 y 20 horas respectivamente a $\lambda'_1$ y $\lambda'_2$, ¿cuál será ahora la confiabilidad del Sistema A?
+\end{enumerate}
+
+\vspace{3mm}
+\h3{Desarrollo}
+Llamamos $T$ al tiempo que tarda el sistema en fallar.
+
+Si un componente tiene una tasa de falla constante $\lambda_i$, su confiabilidad es $R_i(t) = e^{-\lambda_i t}$. Para calcular el tiempo esperado hasta que el sistema falle, integramos su confiabilidad desde $0$ hasta infinito,
+\begin{equation*}
+    \mathbb{E}[T] = \int_0^\infty R(t)\,dt.
+\end{equation*}
+
+\vspace{3mm}
+\h3{(a) Tiempo esperado de falla de cada sistema}
+
+\h4{1. Sistema A en serie}
+En un sistema en serie, todo el sistema funciona solo si los tres componentes funcionan a la vez. Como son independientes, multiplicamos sus confiabilidades,
+\begin{equation*}
+    R_A(t) = R_1(t) \cdot R_2(t) \cdot R_3(t) = e^{-\lambda_1 t} \cdot e^{-\lambda_2 t} \cdot e^{-\lambda_3 t} = e^{-(\lambda_1 + \lambda_2 + \lambda_3)t}.
+\end{equation*}
+
+Ahora integramos para hallar el tiempo esperado de falla,
+\begin{equation*}
+    \mathbb{E}[T_A] = \int_0^\infty e^{-(\lambda_1 + \lambda_2 + \lambda_3)t}\,dt = \left[ -\frac{e^{-(\lambda_1 + \lambda_2 + \lambda_3)t}}{\lambda_1 + \lambda_2 + \lambda_3} \right]_0^\infty = \frac{1}{\lambda_1 + \lambda_2 + \lambda_3}.
+\end{equation*}
+
+\vspace{3mm}
+\h4{2. Sistema B en paralelo}
+En un sistema en paralelo, el sistema sigue funcionando mientras al menos uno de los tres componentes esté vivo. Es decir, solo falla si todos fallan al mismo tiempo,
+\begin{equation*}
+    R_B(t) = 1 - (1 - e^{-\lambda_1 t})(1 - e^{-\lambda_2 t})(1 - e^{-\lambda_3 t}).
+\end{equation*}
+
+Para simplificar la expresión, multiplicamos primero los dos primeros paréntesis,
+\begin{equation*}
+    (1 - e^{-\lambda_1 t})(1 - e^{-\lambda_2 t}) = 1 - e^{-\lambda_1 t} - e^{-\lambda_2 t} + e^{-(\lambda_1 + \lambda_2)t}.
+\end{equation*}
+Luego multiplicamos por el tercer paréntesis $(1 - e^{-\lambda_3 t})$ y restamos todo de 1,
+\begin{equation*}
+    R_B(t) = e^{-\lambda_1 t} + e^{-\lambda_2 t} + e^{-\lambda_3 t} - \left( e^{-(\lambda_1 + \lambda_2)t} + e^{-(\lambda_1 + \lambda_3)t} + e^{-(\lambda_2 + \lambda_3)t} \right) + e^{-(\lambda_1 + \lambda_2 + \lambda_3)t}.
+\end{equation*}
+
+Como la integral de cada exponencial es $\int_0^\infty e^{-\alpha t}\,dt = \frac{1}{\alpha}$, integramos término a término para obtener el tiempo esperado de falla,
+\begin{equation*}
+    \mathbb{E}[T_B] = \frac{1}{\lambda_1} + \frac{1}{\lambda_2} + \frac{1}{\lambda_3} - \left( \frac{1}{\lambda_1 + \lambda_2} + \frac{1}{\lambda_1 + \lambda_3} + \frac{1}{\lambda_2 + \lambda_3} \right) + \frac{1}{\lambda_1 + \lambda_2 + \lambda_3}.
+\end{equation*}
+
+\vspace{4mm}
+\h3{(b) Confiabilidad del Sistema A con tasas de falla variables}
+Para el sistema en serie, la confiabilidad sigue siendo el producto $R_A(t) = R_1(t) \cdot R_2(t) \cdot R_3(t)$. Cuando la tasa de falla $\rho_i(u)$ cambia con el tiempo, usamos la fórmula general acumulando el desgaste,
+\begin{equation*}
+    R_i(t) = e^{-\int_0^t \rho_i(u)\,du}.
+\end{equation*}
+
+Escribimos la tasa de falla de cada componente según los datos del problema,
+\begin{equation*}
+    \rho_1(t) = \begin{cases}
+        \lambda_1 & \text{si } 0 \le t \le 10, \\[1.5mm]
+        \lambda'_1 & \text{si } t > 10,
+    \end{cases}
+    \qquad
+    \rho_2(t) = \begin{cases}
+        \lambda_2 & \text{si } 0 \le t \le 20, \\[1.5mm]
+        \lambda'_2 & \text{si } t > 20,
+    \end{cases}
+    \qquad
+    \rho_3(t) = \lambda_3 \quad \text{para todo } t \ge 0.
+\end{equation*}
+
+\vspace{2mm}
+Calculamos ahora la confiabilidad de cada componente por separado.
+
+Para el componente $C_1$: si $0 \le t \le 10$, solo actúa su tasa inicial $\lambda_1$,
+\begin{equation*}
+    \int_0^t \rho_1(u)\,du = \int_0^t \lambda_1\,du = \lambda_1 t \implies R_1(t) = e^{-\lambda_1 t}.
+\end{equation*}
+Si $t > 10$, la tasa cambia a partir de la hora 10. El componente funcionó 10 horas con la tasa $\lambda_1$ y el resto del tiempo $(t - 10)$ con la nueva tasa $\lambda'_1$. Separamos la integral en dos partes para sumar el desgaste de cada etapa,
+\begin{equation*}
+    \int_0^t \rho_1(u)\,du = \int_0^{10} \lambda_1\,du + \int_{10}^t \lambda'_1\,du = 10\lambda_1 + \lambda'_1(t - 10) = 10(\lambda_1 - \lambda'_1) + \lambda'_1 t.
+\end{equation*}
+Así, la confiabilidad de $C_1$ queda,
+\begin{equation*}
+    R_1(t) = \begin{cases}
+        e^{-\lambda_1 t} & \text{si } 0 \le t \le 10, \\[2mm]
+        e^{-10(\lambda_1 - \lambda'_1) - \lambda'_1 t} & \text{si } t > 10.
+    \end{cases}
+\end{equation*}
+
+Hacemos lo mismo para el componente $C_2$. Si $0 \le t \le 20$,
+\begin{equation*}
+    \int_0^t \rho_2(u)\,du = \int_0^t \lambda_2\,du = \lambda_2 t \implies R_2(t) = e^{-\lambda_2 t}.
+\end{equation*}
+Si $t > 20$, la tasa cambia a partir de la hora 20. Sumamos el desgaste de las primeras 20 horas con la tasa $\lambda_2$ y el de las horas restantes con la tasa $\lambda'_2$,
+\begin{equation*}
+    \int_0^t \rho_2(u)\,du = \int_0^{20} \lambda_2\,du + \int_{20}^t \lambda'_2\,du = 20\lambda_2 + \lambda'_2(t - 20) = 20(\lambda_2 - \lambda'_2) + \lambda'_2 t.
+\end{equation*}
+Así, la confiabilidad de $C_2$ queda,
+\begin{equation*}
+    R_2(t) = \begin{cases}
+        e^{-\lambda_2 t} & \text{si } 0 \le t \le 20, \\[2mm]
+        e^{-20(\lambda_2 - \lambda'_2) - \lambda'_2 t} & \text{si } t > 20.
+    \end{cases}
+\end{equation*}
+
+Para el componente $C_3$, su tasa nunca cambia, por lo que $R_3(t) = e^{-\lambda_3 t}$ para todo $t \ge 0$.
+
+\vspace{3mm}
+Ahora multiplicamos las tres confiabilidades $R_A(t) = R_1(t) \cdot R_2(t) \cdot R_3(t)$ en cada uno de los tres tramos de tiempo:
+
+\begin{enumerate}
+    \item \textbf{Tramo $0 \le t \le 10$.} Los tres componentes tienen sus tasas originales,
+    \begin{equation*}
+        R_A(t) = e^{-\lambda_1 t} \cdot e^{-\lambda_2 t} \cdot e^{-\lambda_3 t} = e^{-(\lambda_1 + \lambda_2 + \lambda_3)t}.
+    \end{equation*}
+
+    \item \textbf{Tramo $10 < t \le 20$.} El componente $C_1$ ya cambió a $\lambda'_1$, mientras que $C_2$ y $C_3$ siguen con sus tasas originales,
+    \begin{equation*}
+        R_A(t) = e^{-10(\lambda_1 - \lambda'_1) - \lambda'_1 t} \cdot e^{-\lambda_2 t} \cdot e^{-\lambda_3 t} = e^{-10(\lambda_1 - \lambda'_1) - (\lambda'_1 + \lambda_2 + \lambda_3)t}.
+    \end{equation*}
+
+    \item \textbf{Tramo $t > 20$.} Tanto $C_1$ como $C_2$ ya cambiaron de tasa, y $C_3$ sigue constante,
+    \begin{equation*}
+        R_A(t) = e^{-10(\lambda_1 - \lambda'_1) - \lambda'_1 t} \cdot e^{-20(\lambda_2 - \lambda'_2) - \lambda'_2 t} \cdot e^{-\lambda_3 t} = e^{-10(\lambda_1 - \lambda'_1) - 20(\lambda_2 - \lambda'_2) - (\lambda'_1 + \lambda'_2 + \lambda_3)t}.
+    \end{equation*}
+\end{enumerate}
+
+\vspace{3mm}
+Uniendo los tres tramos en una sola función,
+\begin{equation*}
+    R_A(t) = \begin{cases}
+        e^{-(\lambda_1 + \lambda_2 + \lambda_3)t} & \text{si } 0 \le t \le 10, \\[2.5mm]
+        e^{-10(\lambda_1 - \lambda'_1) - (\lambda'_1 + \lambda_2 + \lambda_3)t} & \text{si } 10 < t \le 20, \\[2.5mm]
+        e^{-10(\lambda_1 - \lambda'_1) - 20(\lambda_2 - \lambda'_2) - (\lambda'_1 + \lambda'_2 + \lambda_3)t} & \text{si } t > 20.
+    \end{cases}
+\end{equation*}
+
+\conclusion{En un sistema en serie, el tiempo esperado de falla es simplemente el inverso de la suma de las tasas de cada componente. Si las tasas aumentan a las 10 y 20 horas, los componentes se desgastan más rápido y la confiabilidad del sistema cae con mayor velocidad en cada nuevo tramo.}
+
+\end{document}

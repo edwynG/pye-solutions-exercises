@@ -1,0 +1,85 @@
+% ==============================================================================
+% MACROS Y ATAJOS MATEMÁTICOS PARA PROBABILIDAD Y ESTADÍSTICA
+% Diseñados para escribir fórmulas limpias, legibles y fáciles de modificar
+% ==============================================================================
+
+% ------------------------------------------------------------------------------
+% 1. PROBABILIDADES Y CONJUNTOS
+% ------------------------------------------------------------------------------
+% Probabilidad de un evento: \prob{A} -> P(A)
+\newcommand{\prob}[1]{\mathbb{P}\left(#1\right)}
+
+% Probabilidad condicional: \probcond{A}{B} -> P(A | B)
+\newcommand{\probcond}[2]{\mathbb{P}\left(#1 \;\middle|\; #2\right)}
+
+% Conjunto de resultados o espacio muestral: \espacioMuestral
+\newcommand{\espacioMuestral}{\Omega}
+
+% ------------------------------------------------------------------------------
+% 2. ESPERANZA, VARIANZA Y MOMENTOS
+% ------------------------------------------------------------------------------
+% Esperanza matemática: \esp{X} -> E[X]
+\newcommand{\esp}[1]{\mathbb{E}\left[#1\right]}
+
+% Esperanza condicional: \espcond{X}{Y} -> E[X | Y]
+\newcommand{\espcond}[2]{\mathbb{E}\left[#1 \;\middle|\; #2\right]}
+
+% Varianza: \var{X} -> Var(X)
+\newcommand{\var}[1]{\mathrm{Var}\left(#1\right)}
+
+% Desvío estándar: \sd{X} -> \sigma(X)
+\newcommand{\sd}[1]{\mathrm{SD}\left(#1\right)}
+
+% Covarianza: \cov{X}{Y} -> Cov(X, Y)
+\newcommand{\cov}[2]{\mathrm{Cov}\left(#1, #2\right)}
+
+% Coeficiente de correlación: \corr{X}{Y} -> \rho(X, Y)
+\newcommand{\corr}[2]{\rho\left(#1, #2\right)}
+
+% ------------------------------------------------------------------------------
+% 3. DISTRIBUCIONES DE PROBABILIDAD USUALES
+% ------------------------------------------------------------------------------
+% Distribución Binomial: \distBinomial{n}{p} -> Binomial(n, p)
+\newcommand{\distBinomial}[2]{\mathrm{Binomial}\left(#1, #2\right)}
+
+% Distribución Poisson: \distPoisson{\lambda} -> Poisson(\lambda)
+\newcommand{\distPoisson}[1]{\mathrm{Poisson}\left(#1\right)}
+
+% Distribución Geométrica: \distGeometrica{p} -> Geom(p)
+\newcommand{\distGeometrica}[1]{\mathrm{Geom}\left(#1\right)}
+
+% Distribución Hipergeométrica: \distHipergeom{N}{K}{n} -> Hipergeom(N, K, n)
+\newcommand{\distHipergeom}[3]{\mathrm{Hipergeom}\left(#1, #2, #3\right)}
+
+% Distribución Uniforme: \distUniforme{a}{b} -> U(a, b)
+\newcommand{\distUniforme}[2]{\mathcal{U}\left(#1, #2\right)}
+
+% Distribución Normal: \distNormal{\mu}{\sigma^2} -> N(\mu, \sigma^2)
+\newcommand{\distNormal}[2]{\mathcal{N}\left(#1, #2\right)}
+
+% Distribución Exponencial: \distExp{\lambda} -> Exp(\lambda)
+\newcommand{\distExp}[1]{\mathrm{Exp}\left(#1\right)}
+
+% ------------------------------------------------------------------------------
+% 4. CADENAS DE MARKOV
+% ------------------------------------------------------------------------------
+% Matriz de transición de un paso: \matrizP
+\newcommand{\matrizP}{\mathbf{P}}
+
+% Vector de probabilidades de estado o distribución estacionaria: \vectorPi
+\newcommand{\vectorPi}{\boldsymbol{\pi}}
+
+% Estado genérico: \estado{i}
+\newcommand{\estado}[1]{\text{Estado } #1}
+
+% ------------------------------------------------------------------------------
+% 5. CONFIABILIDAD DE SISTEMAS
+% ------------------------------------------------------------------------------
+% Función de confiabilidad del sistema: \confiabilidad{t} -> R(t)
+\newcommand{\confiabilidad}[1]{R\left(#1\right)}
+
+% Tasa de fallas (hazard rate): \tasaFallas{t} -> \lambda(t)
+\newcommand{\tasaFallas}[1]{\lambda\left(#1\right)}
+
+% Tiempo medio hasta la falla: \MTTF
+\newcommand{\MTTF}{\mathrm{MTTF}}

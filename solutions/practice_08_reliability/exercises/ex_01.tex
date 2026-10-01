@@ -1,0 +1,125 @@
+% !TEX root = ../../../main.tex
+% ==============================================================================
+% EJERCICIO 1 - PRÁCTICA 8: CONFIABILIDAD
+% Ubicación: solutions/practice_08_reliability/exercises/ex_01.tex
+% ==============================================================================
+\IfFileExists{main.tex}{%
+    \documentclass[main.tex]{subfiles}%
+}{%
+    \documentclass[../../../main.tex]{subfiles}%
+}
+
+\begin{document}
+
+\h2{Ejercicio 1}
+
+Considere los siguientes sistemas:
+
+\begin{center}
+\begin{tikzpicture}[
+    bloque/.style={draw=black, fill=white, minimum width=0.9cm, minimum height=0.7cm, font=\bfseries},
+    linea/.style={thick, draw=black}
+]
+    % --- SISTEMA A (SERIE) ---
+    \node at (1.5, 1.2) {\textbf{Sistema A}};
+    \node[bloque] (A1) at (0, 0) {$C_1$};
+    \node[bloque] (A2) at (1.5, 0) {$C_2$};
+    \node[bloque] (A3) at (3.0, 0) {$C_3$};
+    
+    \draw[linea] (-1, 0) -- (A1);
+    \draw[linea] (A1) -- (A2);
+    \draw[linea] (A2) -- (A3);
+    \draw[linea] (A3) -- (4, 0);
+
+    % --- SISTEMA B (PARALELO) ---
+    \node at (7.5, 1.7) {\textbf{Sistema B}};
+    \node[bloque] (B1) at (7.5, 1.0) {$C_1$};
+    \node[bloque] (B2) at (7.5, 0.0) {$C_2$};
+    \node[bloque] (B3) at (7.5, -1.0) {$C_3$};
+
+    \draw[linea] (5.8, 0) -- (6.6, 0);
+    \draw[linea] (6.6, 1.0) -- (6.6, -1.0);
+    \draw[linea] (6.6, 1.0) -- (B1);
+    \draw[linea] (6.6, 0) -- (B2);
+    \draw[linea] (6.6, -1.0) -- (B3);
+
+    \draw[linea] (B1) -- (8.4, 1.0);
+    \draw[linea] (B2) -- (8.4, 0);
+    \draw[linea] (B3) -- (8.4, -1.0);
+    \draw[linea] (8.4, 1.0) -- (8.4, -1.0);
+    \draw[linea] (8.4, 0) -- (9.2, 0);
+\end{tikzpicture}
+\end{center}
+
+Asumiendo que cada componente tiene una confiabilidad de $0{,}94$, $0{,}95$ y $0{,}80$, respectivamente, se pide determinar para cada sistema los siguientes aspectos.
+\begin{enumerate}[(a)]
+    \item Función de confiabilidad.
+    \item Función de estructura.
+    \item Vectores de camino mínimo.
+\end{enumerate}
+
+\h3{Desarrollo}
+Primero definimos las variables que describen el estado de cada componente. Asociamos a cada componente $C_i$ una variable binaria $x_i$ que toma valor 1 si el componente opera correctamente y 0 si falla,
+\begin{equation*}
+    x_i = \begin{cases} 
+        1 & \text{si la componente } C_i \text{ funciona satisfactoriamente,} \\ 
+        0 & \text{si la componente } C_i \text{ falla,} 
+    \end{cases} \quad \text{para } i \in \{1, 2, 3\}.
+\end{equation*}
+
+El vector $\mathbf{x} = (x_1, x_2, x_3)$ reúne el estado completo del circuito. Como cada componente funciona de forma independiente, sus confiabilidades individuales corresponden a
+\begin{equation*}
+    R_1 = \prob{x_1 = 1} = 0{,}94, \quad R_2 = \prob{x_2 = 1} = 0{,}95, \quad R_3 = \prob{x_3 = 1} = 0{,}80.
+\end{equation*}
+
+Analizamos a continuación el comportamiento de cada sistema.
+
+\h3{1. Sistema A en configuración serie}
+En el Sistema A, los componentes se encuentran conectados uno a continuación del otro. Si uno solo de ellos falla, el flujo se interrumpe y todo el circuito deja de operar.
+
+\h3{(b) Función de estructura}
+Para que el sistema se encuentre operativo con $\phi_A(\mathbf{x}) = 1$, es indispensable que los tres componentes funcionen simultáneamente, es decir, que ocurra $x_1 = 1$, $x_2 = 1$ y $x_3 = 1$. Por consiguiente, su función de estructura corresponde al producto de las variables de estado,
+\begin{equation*}
+    \phi_A(\mathbf{x}) = \min(x_1, x_2, x_3) = x_1 x_2 x_3.
+\end{equation*}
+
+\h3{(c) Vectores y conjuntos de camino mínimo}
+Un camino mínimo es una combinación irreductible de componentes que asegura el funcionamiento del sistema. Al necesitar obligatoriamente a todas las piezas, existe un único vector de camino mínimo,
+\begin{equation*}
+    \mathbf{x}^* = (1, 1, 1), \quad \text{con conjunto de camino mínimo } A_1 = \{1, 2, 3\}.
+\end{equation*}
+
+\h3{(a) Función de confiabilidad}
+Debido a que los componentes operan con independencia estadística, la probabilidad de que todos funcionen a la vez es el producto de sus confiabilidades individuales,
+\begin{equation*}
+    R_A = R_1 \cdot R_2 \cdot R_3 = 0{,}94 \times 0{,}95 \times 0{,}80 = 0{,}7144 = 71{,}44\%.
+\end{equation*}
+
+\h3{2. Sistema B en configuración paralelo}
+En el Sistema B, los componentes se ubican en ramas alternativas. El sistema continúa activo mientras al menos uno de los tres componentes funcione, y solo falla cuando todos dejan de operar simultáneamente.
+
+\h3{(b) Función de estructura}
+Basta con que uno de los componentes esté activo para que el sistema funcione. Expresamos la estructura mediante el complemento del estado en el cual fallan todos los componentes,
+\begin{equation*}
+    \phi_B(\mathbf{x}) = 1 - (1 - x_1)(1 - x_2)(1 - x_3) = x_1 + x_2 + x_3 - x_1 x_2 - x_1 x_3 - x_2 x_3 + x_1 x_2 x_3.
+\end{equation*}
+
+\h3{(c) Vectores y conjuntos de camino mínimo}
+Dado que el funcionamiento de cualquiera de los componentes garantiza la operación del sistema, cada componente por separado conforma un camino mínimo,
+\begin{align*}
+    \mathbf{x}^{(1)} &= (1, 0, 0) \implies B_1 = \{1\}, \\
+    \mathbf{x}^{(2)} &= (0, 1, 0) \implies B_2 = \{2\}, \\
+    \mathbf{x}^{(3)} &= (0, 0, 1) \implies B_3 = \{3\}.
+\end{align*}
+
+\h3{(a) Función de confiabilidad}
+Calculamos la confiabilidad mediante el evento complementario, evaluando la probabilidad de que ocurra la falla simultánea de los tres componentes,
+\begin{align*}
+    R_B &= 1 - (1 - R_1)(1 - R_2)(1 - R_3) \\
+        &= 1 - (1 - 0{,}94)(1 - 0{,}95)(1 - 0{,}80) \\
+        &= 1 - (0{,}06 \times 0{,}05 \times 0{,}20) = 1 - 0{,}0006 = 0{,}9994 = 99{,}94\%.
+\end{align*}
+
+\conclusion{El Sistema A en configuración serie alcanza una confiabilidad de $71{,}44\%$, valor que resulta menor al de su componente más vulnerable, cuya confiabilidad individual es de $0{,}80$. Esta disminución se debe a que la falla de un solo componente compromete todo el sistema. Por el contrario, el Sistema B en configuración paralelo alcanza una confiabilidad de $99{,}94\%$ gracias a la redundancia de sus caminos, pues únicamente deja de operar si los tres componentes fallan a la vez.}
+
+\end{document}

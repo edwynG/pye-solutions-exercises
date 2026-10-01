@@ -75,13 +75,7 @@ Se pide calcular lo siguiente:
 
 \vspace{3mm}
 \h3{Desarrollo}
-Cada componente falla con probabilidad $p$, por lo que funciona con probabilidad $r = 1 - p$. Asociamos a cada componente una variable binaria de estado,
-\begin{equation*}
-    x_i = \begin{cases}
-        1 & \text{si el componente } i \text{ funciona,} \\
-        0 & \text{si el componente } i \text{ falla.}
-    \end{cases}
-\end{equation*}
+Cada componente falla con probabilidad $p$ y funciona con probabilidad $r = 1 - p$. Para representar el estado del circuito usamos variables binarias donde $x_i = 1$ indica que el componente funciona y $x_i = 0$ que ha fallado.
 
 Mirando el diagrama, el componente 6 está en serie justo a la entrada. Luego el flujo se divide en tres ramas paralelas:
 \begin{itemize}

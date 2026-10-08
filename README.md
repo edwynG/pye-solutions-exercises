@@ -1,18 +1,15 @@
-# Probabilidad y Estadística - Resolución de prácticas
+# Probabilidad y Estadística - Prácticas y exámenes parciales resueltos
 
-Este repositorio está dedicado a la **resolución completa, paso a paso y tipografiada en LaTeX** de todas las guías de trabajos prácticos de la materia **Probabilidad y Estadística**. 
+Este repositorio está dedicado a la **resolución completa, paso a paso y tipografiada en LaTeX** de las guías de trabajos prácticos y de los exámenes parciales de la materia **Probabilidad y Estadística** (Escuela de Computación, Facultad de Ciencias, UCV).
 
-El objetivo es construir un compendio riguroso, didáctico y visualmente claro de ejercicios resueltos que sirva como material de consulta y estudio para cada una de las unidades del curso:
+El objetivo es disponer de un material de estudio riguroso, didáctico y visualmente claro, organizado en dos manuales independientes:
+1. **Manual de prácticas:** guías de trabajos prácticos por unidad temática (prácticas 0 a 8).
+2. **Manual de exámenes parciales:** exámenes parciales organizados cronológicamente por período o semestre lectivo, como 1-2025 o 2-2025.
 
-* **Práctica 0:** Conteo y probabilidad
-* **Práctica 1:** Variables aleatorias
-* **Práctica 2:** Distribuciones de variables aleatorias
-* **Práctica 3:** Variables aleatorias conjuntas
-* **Práctica 4:** Distribución Normal, TCL y Ley de Grandes Números
-* **Práctica 5:** Intervalos de confianza
-* **Práctica 6:** Pruebas de hipótesis
-* **Práctica 7:** Cadenas de Markov
-* **Práctica 8:** Confiabilidad
+Ambos sistemas son modulares y permiten compilar:
+- El manual maestro completo de todas las prácticas o de todos los exámenes.
+- Cualquier guía de práctica o examen parcial individual.
+- Cualquier ejercicio o problema suelto.
 
 ---
 
@@ -20,99 +17,137 @@ El objetivo es construir un compendio riguroso, didáctico y visualmente claro d
 
 ```text
 PyE/                                          # Raíz del proyecto
-├── Makefile                                  # Comandos make genéricos y atajos
-├── compile.sh                                # Script genérico de compilación
-├── main.tex                                  # Compilador maestro de todo el curso
+├── Makefile                                  # Comandos make y atajos rápidos
+├── compile.sh                                # Script automatizado de compilación
+├── practices.tex                             # Compilador maestro de las prácticas
+├── exams.tex                                 # Compilador maestro de los exámenes parciales
 ├── README.md                                 # Documentación y guía de uso
 ├── .gitignore                                # Filtro para ignorar temporales y build/
 │
 ├── config/                                   # Configuraciones compartidas en la raíz
-│   ├── preamble.tex                          # Paquetes, márgenes, colores y entornos de cajas
+│   ├── preamble.tex                          # Paquetes, márgenes, colores y estilos
 │   └── macros.tex                            # Atajos matemáticos de probabilidad y estadística
 │
-├── solutions/                                # Carpeta que agrupa EXCLUSIVAMENTE las prácticas
+├── practices/                                # Prácticas del curso (fijas por tema)
 │   ├── practice_00_counting_probability/
-│   │   ├── practice_00.tex                   # Compila solo la Práctica 0
+│   │   ├── practice_00.tex                   # Compila solo la práctica 0
 │   │   └── exercises/
 │   │       └── ex_01.tex                     # Ejercicio 1 resuelto
-│   ├── practice_01_random_variables/
-│   ├── practice_02_distributions/
-│   ├── practice_03_joint_distributions/
-│   ├── practice_04_normal_clt_lln/
-│   ├── practice_05_confidence_intervals/
-│   ├── practice_06_hypothesis_testing/
-│   ├── practice_07_markov_chains/
 │   └── practice_08_reliability/
-│       ├── practice_08.tex                   # Compila solo la Práctica 8
+│       ├── practice_08.tex                   # Compila solo la práctica 8
 │       └── exercises/
-│           ├── ex_01.tex                     # Ejercicio 1 resuelto con diagrama TikZ
-│           ├── ex_02.tex                     # Ejercicio 2 resuelto (MTTF y tasas variables)
-│           └── ex_03.tex                     # Ejercicio 3 resuelto (sistema de 9 componentes)
+│           ├── ex_01.tex                     # Ejercicio 1 resuelto
+│           ├── ex_02.tex                     # Ejercicio 2 resuelto
+│           └── ex_03.tex                     # Ejercicio 3 resuelto
 │
-├── build/                                    # Carpeta de salida (generada bajo demanda)
-│   ├── main.pdf                              # [Nivel 3] Todo el curso unificado (en la raíz de build/)
-│   ├── practices/                            # [Nivel 2] Creada únicamente al compilar prácticas completas
-│   │   ├── practice_00.pdf
-│   │   ├── practice_08.pdf
+├── exams/                                    # Exámenes organizados por período o semestre
+│   └── 2025_2/                               # Semestre 2-2025
+│       └── exam_01/
+│           ├── exam_01.tex                   # Compila solo el examen 1 del 2-2025
+│           └── exercises/
+│               └── ex_01.tex                 # Problema 1 (plantilla para plantear)
+│
+├── build/                                    # Salida de compilación (generada bajo demanda)
+│   ├── practices.pdf                         # Manual completo de prácticas
+│   ├── exams.pdf                             # Manual completo de exámenes parciales
+│   ├── practices/                            # Archivos pdf de prácticas individuales completas
+│   ├── exams/                                # Archivos pdf de exámenes completos por período
+│   │   ├── exam_01_2025_1.pdf
+│   │   ├── exam_01_2025_2.pdf
 │   │   └── ...
-│   └── exercises/                            # [Nivel 1] Creada únicamente al compilar ejercicios individuales
+│   └── exercises/                            # Archivos pdf de problemas individuales
 │       ├── practice_08_ex_01.pdf
-│       ├── practice_08_ex_02.pdf
+│       ├── exam_01_ex_01_2025_2.pdf
 │       └── ...
 │
 └── docs/                                     # Material original de la cátedra
-    ├── Libros/
-    ├── Practicas/
-    └── Teoria/
+    ├── books/
+    ├── exams/
+    ├── practices/
+    └── theory/
 ```
 
 ---
 
-## 🛠️ Comandos genéricos de compilación (desde la raíz `PyE/`)
+## 🛠️ Comandos de compilación (desde la raíz `PyE/`)
 
-No necesitas entrar a ninguna subcarpeta; todos los comandos se ejecutan desde la terminal en la raíz:
-
-### 1. Documento unificado (todo el libro)
+### 1. Documentos maestros unificados
 ```bash
-make main
-# O también: ./compile.sh main
-# Resultado en: build/main.pdf
+# Compilar todo el manual de prácticas:
+make practices
+# (o también con su alias: make main)
+# (genera build/practices.pdf)
+
+# Compilar todo el manual de exámenes parciales:
+make exams
+# O su alias en español:
+make parciales
+# (genera build/exams.pdf con portada e índice cronológico)
 ```
 
-### 2. Práctica completa (cualquiera de la 0 a la 8)
-Reemplaza `8` por la práctica que desees:
+### 2. Prácticas y ejercicios de prácticas
 ```bash
+# Práctica completa (ejemplo: práctica 8):
 make practice P=8
 # O usando el atajo rápido:
 make p8
-# O también: ./compile.sh practice 8
-# Resultado en: build/practices/practice_08.pdf
+# (genera build/practices/practice_08.pdf)
+
+# Ejercicio individual (ejemplo: práctica 8, ejercicio 1):
+make exercise P=8 E=1
+# O usando el atajo rápido:
+make p8_e1
+# (genera build/exercises/practice_08_ex_01.pdf)
 ```
 
-### 3. Ejercicio individual (cualquiera de cualquier práctica)
-Indica la práctica (`P`) y el número de ejercicio (`E`):
-```bash
-make exercise P=8 E=1
-# O usando los atajos rápidos (admite 'ex' o 'e', con o sin ceros):
-make p8_ex01
-make p8_e1
-# O también: ./compile.sh exercise 8 1
-# Resultado en: build/exercises/practice_08_ex_01.pdf
-```
+### 3. Exámenes parciales por período o semestre
+Indica el semestre con la variable `S` (admite formatos como `2025-1`, `1-2025`, `2025_1`, `2025-2`, `II-2025`, etc.) y el examen con `E`:
+
+* **Compilar un examen parcial completo:**
+  ```bash
+  # Examen 1 del período 2-2025:
+  make exam S=2025-2 E=1
+  # Atajo rápido equivalente:
+  make exam1_2025_2
+  # (o también con alias: make parc1_2025_2)
+  # (genera build/exams/exam_01_2025_2.pdf)
+  ```
+
+* **Compilar un problema individual de un examen:**
+  ```bash
+  # Problema 1 del examen 1 del período 2-2025:
+  make exam S=2025-2 E=1 P=1
+  # Atajo rápido equivalente:
+  make exam1_e1_2025_2
+  # (o también con alias: make parc1_e1_2025_2)
+  # (genera build/exercises/exam_01_ex_01_2025_2.pdf)
+  ```
 
 ### 4. Limpieza
 ```bash
-make clean        # Elimina .aux, .log, etc., conservando los PDFs intactos
-make clean-all    # Elimina toda la carpeta build/
+make clean        # Elimina archivos auxiliares (.aux, .log, .toc), preservando los archivos pdf
+make clean-all    # Elimina completamente la carpeta build/
 ```
 
 ---
 
-## 🎨 Cómo personalizar el proyecto a mano
+## ✏️ Cómo agregar nuevos semestres, exámenes o problemas
 
-1. **Datos personales y colores:** Edita las primeras líneas de `config/preamble.tex` para cambiar tu nombre, universidad, o la paleta de colores (`colorEnunciado`, `colorSolucion`, etc.).
-2. **Nuevos atajos matemáticos:** Agrega cualquier símbolo recurrente en `config/macros.tex`.
-3. **Agregar un nuevo ejercicio (ejemplo: Práctica 8, Ejercicio 4):**
-   * Crea el archivo `solutions/practice_08_reliability/exercises/ex_04.tex` (puedes duplicar `ex_01.tex`).
-   * En `solutions/practice_08_reliability/practice_08.tex`, añade la línea: `\subfile{exercises/ex_04.tex}`.
-   * ¡Listo! Ya puedes compilarlo con `make p8_ex04` o `make p8`.
+1. **Agregar un nuevo problema a un examen existente:**
+   * En `exams/<semestre>/exam_<XX>/exercises/`, crea `ex_<YY>.tex` (puedes duplicar `ex_01.tex`).
+   * En `exam_<XX>.tex`, añade:
+     ```latex
+     \vspace{5mm}
+     \subfile{exercises/ex_02.tex}
+     ```
+   * Compila el problema con `make exam1_e2_2025_2` o el examen completo con `make exam1_2025_2`.
+
+2. **Agregar un nuevo período o semestre como 1-2026:**
+   * Crea la carpeta `exams/2026_1/exam_01/exercises/`.
+   * Crea `exams/2026_1/exam_01/exam_01.tex`.
+   * En `exams.tex`, añade el nuevo período con su título e inclusión:
+     ```latex
+     \separadorSemestre{Semestre 1-2026}
+     \subfile{exams/2026_1/exam_01/exam_01.tex}
+     ```
+   * Podrás compilarlo de inmediato con `make exam S=2026-1 E=1` o `make exam1_2026_1`.

@@ -1,0 +1,124 @@
+% ==============================================================================
+% DOCUMENTO MAESTRO DE EXÁMENES PARCIALES
+% Compila el manual completo de exámenes organizados por período o semestre
+% Ubicación: exams.tex (en la raíz del proyecto)
+% ==============================================================================
+\documentclass[11pt, a4paper]{article}
+
+% Paquete subfiles para permitir compilación modular multinivel
+\usepackage{subfiles}
+
+% Configuraciones compartidas (paquetes y macros matemáticas)
+% Carga dinámica compatible desde la raíz o desde subdirectorios anidados
+\IfFileExists{config/preamble.tex}{%
+    \input{config/preamble.tex}%
+    \input{config/macros.tex}%
+}{%
+    \IfFileExists{../../config/preamble.tex}{%
+        \input{../../config/preamble.tex}%
+        \input{../../config/macros.tex}%
+    }{%
+        \IfFileExists{../../../config/preamble.tex}{%
+            \input{../../../config/preamble.tex}%
+            \input{../../../config/macros.tex}%
+        }{%
+            \input{../../../../config/preamble.tex}%
+            \input{../../../../config/macros.tex}%
+        }%
+    }%
+}
+
+\begin{document}
+
+% ==============================================================================
+% PORTADA INSTITUCIONAL
+% ==============================================================================
+\begin{titlepage}
+    \centering
+    
+    % Encabezado institucional con logos destacados
+    \begin{minipage}{0.22\textwidth}
+        \flushleft
+        \IfFileExists{images/logos/ucv_logo.png}{%
+            \includegraphics[height=3.2cm, keepaspectratio]{images/logos/ucv_logo.png}%
+        }{%
+            \IfFileExists{../../images/logos/ucv_logo.png}{%
+                \includegraphics[height=3.2cm, keepaspectratio]{../../images/logos/ucv_logo.png}%
+            }{%
+                \IfFileExists{../../../images/logos/ucv_logo.png}{%
+                    \includegraphics[height=3.2cm, keepaspectratio]{../../../images/logos/ucv_logo.png}%
+                }{%
+                    \IfFileExists{../../../../images/logos/ucv_logo.png}{%
+                        \includegraphics[height=3.2cm, keepaspectratio]{../../../../images/logos/ucv_logo.png}%
+                    }{}%
+                }%
+            }%
+        }
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.54\textwidth}
+        \centering
+        {\bfseries\large\color{primary} Universidad Central de Venezuela\par}
+        \vspace{2mm}
+        {\normalsize Facultad de Ciencias\par}
+        \vspace{1mm}
+        {\normalsize Escuela de Computación\par}
+        \vspace{2mm}
+        {\normalsize\bfseries Probabilidad y Estadística\par}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.22\textwidth}
+        \flushright
+        \IfFileExists{images/logos/cs_logo.png}{%
+            \includegraphics[height=3.2cm, keepaspectratio]{images/logos/cs_logo.png}%
+        }{%
+            \IfFileExists{../../images/logos/cs_logo.png}{%
+                \includegraphics[height=3.2cm, keepaspectratio]{../../images/logos/cs_logo.png}%
+            }{%
+                \IfFileExists{../../../images/logos/cs_logo.png}{%
+                    \includegraphics[height=3.2cm, keepaspectratio]{../../../images/logos/cs_logo.png}%
+                }{%
+                    \IfFileExists{../../../../images/logos/cs_logo.png}{%
+                        \includegraphics[height=3.2cm, keepaspectratio]{../../../../images/logos/cs_logo.png}%
+                    }{}%
+                }%
+            }%
+        }
+    \end{minipage}
+
+    \vspace{3.5cm}
+
+    % Título del documento
+    {\LARGE \bfseries\color{primary} Probabilidad y Estadística\par}
+    \vspace{0.4cm}
+    {\large Manual de exámenes parciales resueltos paso a paso\par}
+    \vspace{0.3cm}
+    {\normalsize\color{secondary}\bfseries Archivo ordenado por períodos lectivos\par}
+
+    \vspace{1.5cm}
+    {\color{bordercolor}\rule{0.5\textwidth}{0.8pt}}
+
+    \vfill
+
+    % Fecha y ciudad en una sola línea
+    {\normalsize Caracas, Venezuela --- 2026\par}
+\end{titlepage}
+
+% Índice general en su propia página exclusiva
+\tableofcontents
+\clearpage
+
+% Los títulos de exámenes en este manual se registran como subsecciones bajo el semestre
+\renewcommand{\hOneTocLevel}{subsection}
+% En el manual de exámenes los problemas no se agregan al índice para mantenerlo conciso
+\hTwoAddToTocfalse
+
+% ==============================================================================
+% Período lectivo 2-2025
+% ==============================================================================
+\separadorSemestre{Semestre 2-2025}
+
+% Examen 1
+\subfile{exams/2025_2/exam_01/exam_01.tex}
+
+\end{document}

@@ -1,33 +1,60 @@
 # ==============================================================================
 # MAKEFILE GENÉRICO PARA PROBABILIDAD Y ESTADÍSTICA
 # ==============================================================================
-# Este archivo permite compilar cualquier nivel del proyecto con comandos simples.
-# No requiere modificar nada manualmente al agregar nuevos ejercicios o prácticas.
+# Este archivo permite compilar cualquier nivel del proyecto con comandos simples:
+#   - Documentos maestros:
+#       * make main              -> manual completo de prácticas
+#       * make exams             -> manual completo de exámenes parciales
+#   - Guías y exámenes completos:
+#       * make practice P=8      -> práctica 8 completa
+#       * make exam S=2025-1 E=1 -> examen 1 del período 1-2025
+#       * make exam S=2025-2 E=1 -> examen 1 del período 2-2025
+#   - Ejercicios y problemas individuales:
+#       * make exercise P=8 E=1  -> ejercicio 1 de la práctica 8
+#       * make exam S=2025-1 E=1 P=1 -> problema 1 del examen 1 de 2025-1
 #
-# Las fuentes de las prácticas residen dentro de la carpeta 'solutions/'.
-# Los PDFs resultantes se generan organizados dentro de la carpeta 'build/'.
+# Prácticas en 'practices/' y exámenes organizados por período en 'exams/'.
+# Todos los archivos pdf generados se organizan dentro de la carpeta 'build/'.
 # ==============================================================================
 
-.PHONY: all main practice exercise clean clean-all help
+.PHONY: all practices main exams parciales practice exercise exam parcial clean clean-all help
 
-# Por defecto, al ejecutar únicamente 'make', se compila el documento maestro
-all: main
+# Por defecto, compila el manual de prácticas
+all: practices
 
-# Muestra el menú didáctico de ayuda en la terminal
+# Menú didáctico de ayuda en la terminal
 help:
 	@bash compile.sh help
 
 # ------------------------------------------------------------------------------
-# 1. COMPILACIÓN DEL DOCUMENTO MAESTRO (TODAS LAS PRÁCTICAS UNIFICADAS)
+# 1. COMPILACIÓN DE DOCUMENTOS MAESTROS (MANUALES COMPLETOS)
 # ------------------------------------------------------------------------------
+# Manual de todas las prácticas unificadas:
+practices:
+	@bash compile.sh practices
+
+# Alias de compatibilidad:
 main:
-	@bash compile.sh main
+	@bash compile.sh practices
+
+# Manual de todos los exámenes parciales unificados:
+exams:
+	@bash compile.sh exams
+
+# Alias en español para el manual de exámenes:
+parciales:
+	@bash compile.sh exams
 
 # ------------------------------------------------------------------------------
-# 2. COMANDOS GENÉRICOS MEDIANTE VARIABLES (P y E)
-# Ejemplos de uso:
-#   make practice P=8        -> Compila la Práctica 8 completa
-#   make exercise P=8 E=1    -> Compila el Ejercicio 1 de la Práctica 8
+# 2. COMANDOS GENÉRICOS MEDIANTE VARIABLES
+# Prácticas:
+#   make practice P=8            -> Compila la práctica 8 completa
+#   make exercise P=8 E=1        -> Compila el ejercicio 1 de la práctica 8
+#
+# Exámenes por período o semestre:
+#   make exam S=2025-1 E=1       -> Compila el examen 1 del 1-2025
+#   make exam S=2025-2 E=1       -> Compila el examen 1 del II-2025
+#   make exam S=2025-1 E=1 P=1   -> Compila el problema 1 del examen 1 de 2025-1
 # ------------------------------------------------------------------------------
 practice:
 	@bash compile.sh practice $(P)
@@ -35,24 +62,42 @@ practice:
 exercise:
 	@bash compile.sh exercise $(P) $(E)
 
+exam:
+	@bash compile.sh exam $(S) $(E) $(P)
+
+# Alias en español:
+parcial:
+	@bash compile.sh exam $(S) $(P) $(E)
+
 # ------------------------------------------------------------------------------
-# 3. ATAJOS RÁPIDOS GENÉRICOS (Reconoce cualquier combinación automáticamente)
-# Ejemplos:
-#   make p8                  -> Compila la Práctica 8
-#   make p8_e1               -> Compila el Ejercicio 1 de la Práctica 8
-#   make p8_ex01             -> Formato alternativo con 'ex' y ceros
-#   make p0_e1               -> Compila el Ejercicio 1 de la Práctica 0
+# 3. ATAJOS RÁPIDOS GENÉRICOS
+# Prácticas:
+#   make p8                      -> Compila la práctica 8
+#   make p8_e1                   -> Compila el ejercicio 1 de la práctica 8
+#
+# Exámenes (admite nombres en inglés y español):
+#   make exam1_2025_1            -> Examen 1 del período 1-2025
+#   make exam1_e1_2025_1         -> Problema 1 del examen 1 de 2025-1
+#   make parc1_2025_1            -> Alias para examen 1 del 1-2025
+#   make parc1_e1_2025_1         -> Alias para problema 1 del examen 1
 # ------------------------------------------------------------------------------
 p%:
 	@bash compile.sh "p$*"
 
+exam%:
+	@bash compile.sh "exam$*"
+
+parc%:
+	@bash compile.sh "parc$*"
+
+parcial%:
+	@bash compile.sh "parcial$*"
+
 # ------------------------------------------------------------------------------
 # 4. LIMPIEZA DE ARCHIVOS AUXILIARES (.aux, .log, etc.)
 # ------------------------------------------------------------------------------
-# Conserva los archivos PDF generados y borra solo la 'basura' de compilación
 clean:
 	@bash compile.sh clean
 
-# Elimina completamente la carpeta build/
 clean-all:
 	@bash compile.sh clean-all

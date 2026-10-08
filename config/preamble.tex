@@ -67,15 +67,18 @@
 % Centraliza tamaños, colores y espaciados para modificarlos en un solo lugar.
 % ------------------------------------------------------------------------------
 
-% --- Configuración h1 (Título principal / Práctica) ---
+% --- Configuración h1 (Título principal / Práctica o Examen) ---
 \newcommand{\hOneSize}{\LARGE}
 \newcommand{\hOneColor}{primary}
 \newcommand{\hOneLineGap}{3.5mm}            % Separación equilibrada entre el texto y la línea divisoria
 \newcommand{\hOneLineWidth}{0.65\textwidth} % Ancho de la línea divisoria
 \newcommand{\hOneLineHeight}{0.8pt}         % Grosor de la línea divisoria
+\newcommand{\hOneTocLevel}{section}         % Nivel en la tabla de contenidos (section o subsection)
 
 \newcommand{\hOne}[1]{%
   \par\vspace{2.5mm}%
+  \phantomsection%
+  \addcontentsline{toc}{\hOneTocLevel}{#1}%
   \noindent%
   \begin{minipage}{\linewidth}
     \centering
@@ -84,16 +87,43 @@
     \nointerlineskip\vspace{\hOneLineGap}%
     {\color{bordercolor}\rule{\hOneLineWidth}{\hOneLineHeight}}\par
   \end{minipage}\par
-  \addcontentsline{toc}{section}{#1}%
   \vspace{2.5mm}%
 }
+
+% --- Separador de semestre y portadilla para el manual de exámenes ---
+\newcommand{\separadorSemestre}[1]{%
+  \clearpage
+  \phantomsection%
+  % Entrada en el índice como encabezado de categoría visual (sin número de página)
+  \addtocontents{toc}{\vspace{4mm}\noindent{\bfseries\large\color{primary} #1}\par\vspace{1.5mm}}%
+  % Portadilla limpia y sobria en el cuerpo del manual de exámenes
+  \thispagestyle{empty}%
+  \vspace*{\fill}%
+  \begin{center}%
+    {\LARGE\bfseries\color{primary} #1}\par%
+    \vspace{4mm}%
+    {\color{bordercolor}\rule{0.5\textwidth}{1pt}}\par%
+    \vspace{3mm}%
+    {\normalsize\color{darkgray} Exámenes parciales del período lectivo}\par%
+  \end{center}%
+  \vspace*{\fill}%
+  \clearpage
+}
+\newcommand{\tituloSemestre}[1]{\separadorSemestre{#1}}
 
 % --- Configuración h2 (Título de ejercicio) ---
 \newcommand{\hTwoSize}{\Large}
 \newcommand{\hTwoColor}{secondary}
+\newif\ifhTwoAddToToc
+\hTwoAddToToctrue                      % Por defecto activo en prácticas para indexar ejercicios
+\newcommand{\hTwoTocLevel}{subsection} % En las prácticas se indexa como subsección con su número
 
 \newcommand{\hTwo}[1]{%
   \par\vspace{3.5mm}%
+  \phantomsection%
+  \ifhTwoAddToToc
+    \addcontentsline{toc}{\hTwoTocLevel}{#1}%
+  \fi
   \noindent{\hTwoSize\bfseries\color{\hTwoColor} #1\par}%
   \nopagebreak\vspace{1.5mm}%
   \nopagebreak
